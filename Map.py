@@ -31,15 +31,14 @@ def getMap(image,height,rigid):
 
 
 
-#m = drawMap(0, 0)
 pg.init()
 window = pg.display.set_mode((300, 200))
-R = 0
-C = 0
+Radius = 0
+Clearance = 0
 height = 200
 width = 300
 
-rigid = R + C
+rigid = Radius + Clearance
 MAP = getMap(window,height,rigid)
 while True:
 
