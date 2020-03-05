@@ -17,7 +17,7 @@ if __name__ == '__main__':
     clearance = int(ast.literal_eval(clearance))
     obstacle_map = Map(robot_radius, clearance)
     # Initialize the explorer class
-    explorer = Explorer(start_node_coords, goal_node_coords, 'r', robot_radius, clearance)
+    explorer = Explorer(start_node_coords, goal_node_coords)
     # Check validity of start and goal nodes
     if not (obstacle_map.check_node_validity(start_node_coords[0], start_node_coords[1])
             and obstacle_map.check_node_validity(goal_node_coords[0], goal_node_coords[1])):
