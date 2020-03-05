@@ -18,11 +18,13 @@ class Explorer:
         # self.initial_node = convert_into_matrix(self.initial_list)
         self.goal_node = goal_node
         self.robot_type = robot_type
-        self.method = method
         self.obstacle_thresh = robot_radius + clearance
-        # Define empty dictionaries to store open and closed nodes
-        self.open_nodes = {}
-        self.closed_nodes = {}
+        self.method = method
+        self.node_count = 0
+        # Define empty lists to store open and closed nodes
+        self.open_nodes = []
+        self.closed_nodes = []
+        self.generated_nodes = []
 
     def check_node_validity(self, node):
         """
@@ -68,17 +70,49 @@ class Explorer:
 
         return sqrt((self.goal_node[0] - node[0])**2 + (self.goal_node[1] - node[1])**2)
 
-    def get_final_weight(self, node, node_level):
+    def get_final_weight(self, node, node_cost):
         """
         Get final weight for a-star
-        :param node: 3x3 array of the node
-        :param node_level: level of puzzle node
-        :return: final weight for a-star
+        :param node: tuple containing coordinates of the current node
+        :param node_cost: cost of each node
+        :return: final weight for according to method
         """
 
         # If A-star is to be used
         # Add heuristic value and node level to get the final weight for the current node
         if self.method == 'a':
-            return self.get_heuristic_score(node) + node_level
+            return self.get_heuristic_score(node) + node_cost
 
-        return node_level
+        return node_cost
+
+    def generate_path(self):
+        """
+        Generate path using backtracking
+        :return: nothing
+        """
+
+        # Define empty list to store path nodes
+        # This list will be used to generate the node-path text file
+        path_list = []
+        # Get all data for goal node
+        last_node = self.closed_nodes[-1]
+        # Append the matrix for goal node
+        path_list.append(last_node.data)
+        # Iterate until we reach the initial node
+        while not last_node.data == self.start_node:
+            # Search for parent node in the list of closed nodes
+            for node in self.closed_nodes:
+                if node.data == last_node.parent:
+                    # Append parent node
+                    # print('Weight:', last_node.weight, last_node.level)
+                    path_list.append(last_node.parent)
+                    # Update node to search for next parent
+                    last_node = node
+                    break
+        # Iterate through the list in reverse order
+        # Add path nodes to the text file
+        for j in range(len(path_list) - 1, -1, -1):
+            print(path_list[j])
+
+    def increment_node_count(self):
+        self.node_count += 1
