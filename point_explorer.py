@@ -17,7 +17,8 @@ if __name__ == '__main__':
     explorer = Explorer(start_node_coords, goal_node_coords)
     obstacle_map = Map(0, 0)
     # Check validity of start and goal nodes
-    if not (explorer.check_node_validity(start_node_coords) and explorer.check_node_validity(goal_node_coords)):
+    if not (obstacle_map.check_node_validity(start_node_coords[0], start_node_coords[1])
+            and obstacle_map.check_node_validity(goal_node_coords[0], goal_node_coords[1])):
         print('One of the points lie in obstacle space!!\nPlease try again')
         quit()
     # Get the start node and add it to open nodes
@@ -35,8 +36,8 @@ if __name__ == '__main__':
             node_repeated = False
             # Update final weight of the child node
             child_node.weight = explorer.get_final_weight(child_node.data, child_node.cost)
-            node_valid = obstacle_map.check_node_validity(child_node.data[0], child_node.data[1])
-            if node_valid:
+            # Make sure the node does not lie in the obstacle space
+            if obstacle_map.check_node_validity(child_node.data[0], child_node.data[1]):
                 # Check for repetition of child node in closed nodes
                 for closed_node in explorer.closed_nodes:
                     if closed_node.data == child_node.data:
@@ -52,7 +53,6 @@ if __name__ == '__main__':
                 # Append child node to the list of open nodes
                 # Do no append child node if repeated
                 if not node_repeated:
-                    # print('Node Weight:', child_node.weight)
                     explorer.open_nodes.append(child_node)
                     explorer.generated_nodes.append(child_node)
             # Sort the open nodes using their weights
@@ -60,5 +60,6 @@ if __name__ == '__main__':
 
     # Generate path
     explorer.generate_path()
+    # Show map
     imshow('Map', obstacle_map.get_map())
     waitKey(0)
