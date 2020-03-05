@@ -1,3 +1,29 @@
+def call_action(action, coordinates):
+    """
+    Call various actions based on an integer
+    :param action: Varies from 0-7 to call one of the 8 defined actions
+    :param coordinates: a tuple containing x-y coordinates of the node
+    :return: new coordinates of the node after the desired action
+    """
+
+    if action == 0:
+        return go_up(coordinates[0], coordinates[1])
+    elif action == 1:
+        return go_down(coordinates[0], coordinates[1])
+    elif action == 2:
+        return go_right(coordinates[0], coordinates[1])
+    elif action == 3:
+        return go_left(coordinates[0], coordinates[1])
+    elif action == 4:
+        return go_up_right(coordinates[0], coordinates[1])
+    elif action == 5:
+        return go_up_left(coordinates[0], coordinates[1])
+    elif action == 6:
+        return go_down_right(coordinates[0], coordinates[1])
+
+    return go_down_left(coordinates[0], coordinates[1])
+
+
 def go_up(x, y):
     """
     Go 1 unit in positive y-direction
