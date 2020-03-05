@@ -114,7 +114,7 @@ class Map:
         height = self.height
         width = self.width
         thresh = self.thresh
-        COLOR = (0, 0, 255)
+        COLOR = (255, 0, 0)
         img = np.zeros((self.height, self.width, 3), dtype=np.uint8)
 
         if thresh:
