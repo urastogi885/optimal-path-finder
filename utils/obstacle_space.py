@@ -99,28 +99,24 @@ class Map:
                                          (35 + self.thresh, self.height - (76 + self.thresh)),
                                          (100 + self.thresh, self.height - (38.6 - self.thresh)),
                                          (95 - self.thresh, self.height - (30 - self.thresh))], dtype=np.int32).\
-            reshape((-1, 1, 2))
+            reshape((-1, 2))
 
         self.coord_rhombus = np.array([(225, self.height - (40 + self.thresh)),
                                        (250 + self.thresh, self.height - 25),
                                        (225, self.height - (10 - self.thresh)),
-                                       (200 - self.thresh, self.height - 25)], dtype=np.int32).reshape((-1, 1, 2))
+                                       (200 - self.thresh, self.height - 25)], dtype=np.int32).reshape((-1, 2))
 
         self.circle = [(25 + self.thresh), (225, 50)]
         self.ellipse = [(80 + self.thresh, 40 + self.thresh), (150, 100)]
 
     def check_node_validity(self, x, y):
-        poly = self.coord_polygon
-        rect = self.coord_rectangle
-        rhom = self.coord_rhombus
-        circle = self.circle
-        ellipse = self.ellipse
 
-        if check_polygon(poly, x, y) or check_rectangle(rect, x, y) or check_rhombus(rhom, x, y)\
-                or check_circle(circle, x, y) or check_ellipse(ellipse, x, y):
-            return True
+        if check_polygon(self.coord_polygon, x, y) or check_rectangle(self.coord_rectangle, x, y)\
+                or check_rhombus(self.coord_rhombus, x, y) or check_circle(self.circle, x, y)\
+                or check_ellipse(self.ellipse, x, y):
+            return False
 
-        return False
+        return True
 
     def get_map(self):
         # Create empty image and fill it with white background
