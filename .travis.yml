@@ -17,5 +17,5 @@ install:
 
 # Run python scripts
 script:
-  - python3 point_explorer.py 5,5 150,35
-  - python3 rigid_explorer.py 5,5 150,35 1 1
+  - python3 point_explorer.py 5,5 30,35
+  - python3 rigid_explorer.py 5,5 30,35 1 1
