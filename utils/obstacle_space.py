@@ -107,7 +107,7 @@ class Map:
                                        (200 - self.thresh, self.height - 25)], dtype=np.int32).reshape((-1, 2))
 
         self.circle = [(25 + self.thresh), (225, 50)]
-        self.ellipse = [(80 + self.thresh, 40 + self.thresh), (150, 100)]
+        self.ellipse = [(80 + 2 * self.thresh, 40 + 2 * self.thresh), (150, 100)]
 
     def check_node_validity(self, x, y):
 
@@ -121,9 +121,9 @@ class Map:
     def get_map(self):
         # Create empty image and fill it with white background
         img = np.zeros((self.height, self.width, 3), dtype=np.uint8)
-        img.fill(255)
+        # img.fill(255)
         # Define color as a tuple in BGR format for obstacles
-        color = (0, 0, 0)
+        color = (0, 0, 255)
 
         if self.thresh:
             cv2.rectangle(img, (0, 0), (self.width - 1, self.height - 1), color, self.thresh)
