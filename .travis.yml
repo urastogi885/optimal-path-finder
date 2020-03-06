@@ -17,5 +17,7 @@ install:
 
 # Run python scripts
 script:
-  - python3 point_explorer.py 5,5 30,35
-  - python3 rigid_explorer.py 5,5 30,35 1 1
+  - python3 utils/actions.py
+  - python3 utils/node.py
+  - python3 utils/explorer.py
+  - python3 utils/obstacle_space.py
