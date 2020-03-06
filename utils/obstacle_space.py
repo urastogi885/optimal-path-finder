@@ -121,12 +121,9 @@ class Map:
     def get_map(self):
         # Create empty image and fill it with white background
         img = np.zeros((self.height, self.width, 3), dtype=np.uint8)
-        # img.fill(255)
+        img.fill(200)
         # Define color as a tuple in BGR format for obstacles
-        color = (0, 0, 255)
-
-        if self.thresh:
-            cv2.rectangle(img, (0, 0), (self.width - 1, self.height - 1), color, self.thresh)
+        color = (0, 0, 0)
 
         cv2.fillPoly(img, [self.coord_polygon], color)
         cv2.fillConvexPoly(img, self.coord_rectangle, color)
@@ -134,5 +131,4 @@ class Map:
         cv2.circle(img, (225, self.height - 150), (25 + self.thresh), color, -1)
         cv2.ellipse(img, (150, self.height - 100), (40 + self.thresh, 20 + self.thresh), 0, 0, 360, color, -1)
 
-        # img = cv2.resize(img, (self.width * 2, self.height * 2))
         return img
