@@ -1,16 +1,18 @@
 # Import standard libraries
 import ast
 from sys import argv
-from cv2 import imshow, waitKey
+from time import time
+from cv2 import imshow, waitKey, resize
 # Import custom-built classes
 from utils.obstacle_space import Map
 from utils.explorer import Explorer
 from utils.node import Node
 
-script, start_node_coords, goal_node_coords= argv
+script, start_node_coords, goal_node_coords = argv
 
 
 if __name__ == '__main__':
+    start_time = time()
     # Initialize the explorer class
     start_node_coords = tuple(ast.literal_eval(start_node_coords))
     goal_node_coords = tuple(ast.literal_eval(goal_node_coords))
@@ -63,13 +65,15 @@ if __name__ == '__main__':
     # Get image of the map
     map_img = obstacle_map.get_map()
     blue = [255, 0, 0]
-    red = [0, 0, 255]
+    white = [0, 0, 0]
     for node in explorer.generated_nodes:
-        map_img[obstacle_map.height - node.data[1] - 1, node.data[0]] = blue
+        map_img[obstacle_map.height - node.data[1] - 1, node.data[0]] = white
         imshow("Node Exploration", map_img)
         waitKey(1)
     for data in path_data:
         # print(data)
-        map_img[obstacle_map.height - data[1] - 1, data[0]] = red
+        map_img[obstacle_map.height - data[1] - 1, data[0]] = blue
+    map_img = resize(map_img, (obstacle_map.width * 2, obstacle_map.height * 2))
     imshow("Node Exploration", map_img)
-    waitKey(10000)
+    print('Exploration + Display Time:', time() - start_time)
+    waitKey(15000)
