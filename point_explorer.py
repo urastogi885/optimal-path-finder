@@ -59,7 +59,17 @@ if __name__ == '__main__':
             explorer.open_nodes.sort(key=lambda x: x.weight, reverse=False)
 
     # Generate path
-    explorer.generate_path()
-    # Show map
-    imshow('Map', obstacle_map.get_map())
-    waitKey(0)
+    path_data = explorer.generate_path()
+    # Get image of the map
+    map_img = obstacle_map.get_map()
+    blue = [255, 0, 0]
+    red = [0, 0, 255]
+    # map_img[1, 20] = blue
+    for node in explorer.generated_nodes:
+        map_img[obstacle_map.height - node.data[0] - 1, node.data[1]] = blue
+        imshow("Node Exploration", map_img)
+        waitKey(1)
+    for data in path_data:
+        map_img[obstacle_map.height - data[0] - 1, data[1]] = red
+    imshow("Node Exploration", map_img)
+    waitKey(5000)
