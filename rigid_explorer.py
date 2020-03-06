@@ -1,7 +1,8 @@
 # Import standard libraries
 import ast
 from sys import argv
-from cv2 import imshow, waitKey
+from time import time
+from cv2 import imshow, waitKey, resize
 # Import custom-built classes
 from utils.obstacle_space import Map
 from utils.explorer import Explorer
@@ -10,6 +11,7 @@ from utils.node import Node
 script, start_node_coords, goal_node_coords, robot_radius, clearance = argv
 
 if __name__ == '__main__':
+    start_time = time()
     # Convert arguments into their required data types
     start_node_coords = tuple(ast.literal_eval(start_node_coords))
     goal_node_coords = tuple(ast.literal_eval(goal_node_coords))
@@ -19,8 +21,8 @@ if __name__ == '__main__':
     # Initialize the explorer class
     explorer = Explorer(start_node_coords, goal_node_coords)
     # Check validity of start and goal nodes
-    if not (obstacle_map.check_node_validity(start_node_coords[0], start_node_coords[1])
-            and obstacle_map.check_node_validity(goal_node_coords[0], goal_node_coords[1])):
+    if not (obstacle_map.check_node_validity(start_node_coords[0], obstacle_map.height - start_node_coords[1] - 1)
+            and obstacle_map.check_node_validity(goal_node_coords[0], obstacle_map.height - goal_node_coords[1] - 1)):
         print('One of the points lie in obstacle space!!\nPlease try again')
         quit()
     # Get the start node and add it to open nodes
@@ -34,11 +36,11 @@ if __name__ == '__main__':
         if current_node.data == goal_node_coords:
             break
         # Generate child nodes and iterate through them
-        for child_node in current_node.generate_child_nodes((200, 100)):
+        for child_node in current_node.generate_child_nodes((obstacle_map.width, obstacle_map.height)):
             node_repeated = False
             # Update final weight of the child node
             child_node.weight = explorer.get_final_weight(child_node.data, child_node.cost)
-            if obstacle_map.check_node_validity(child_node.data[0], child_node.data[1]):
+            if obstacle_map.check_node_validity(child_node.data[0], obstacle_map.height - child_node.data[1] - 1):
                 # Check for repetition of child node in closed nodes
                 for closed_node in explorer.closed_nodes:
                     if closed_node.data == child_node.data:
@@ -61,7 +63,19 @@ if __name__ == '__main__':
             explorer.open_nodes.sort(key=lambda x: x.weight, reverse=False)
 
     # Generate path
-    explorer.generate_path()
-    # Show map
-    imshow('Map', obstacle_map.get_map())
-    waitKey(0)
+    path_data = explorer.generate_path()
+    # Get image of the map
+    map_img = obstacle_map.get_map()
+    blue = [255, 0, 0]
+    white = [255, 255, 255]
+    for node in explorer.generated_nodes:
+        map_img[obstacle_map.height - node.data[1] - 1, node.data[0]] = white
+        imshow("Node Exploration", map_img)
+        waitKey(1)
+    for data in path_data:
+        # print(data)
+        map_img[obstacle_map.height - data[1] - 1, data[0]] = blue
+    map_img = resize(map_img, (obstacle_map.width * 2, obstacle_map.height * 2))
+    imshow("Node Exploration", map_img)
+    print('Exploration + Display Time:', time() - start_time)
+    waitKey(15000)
