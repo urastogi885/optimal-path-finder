@@ -89,12 +89,12 @@ class Map:
         self.width = 300
         self.thresh = self.radius + self.clearance
 
-        self.coord_polygon = np.array([(20 - self.thresh, self.height - (120 - self.thresh)),
-                                       (25 - self.thresh, self.height - (185 + self.thresh)),
+        self.coord_polygon = np.array([(25 - self.thresh, self.height - (185 + self.thresh)),
                                        (75 + self.thresh, self.height - (185 + self.thresh)),
                                        (100 + self.thresh, self.height - (150 + self.thresh)),
                                        (75 + self.thresh, self.height - (120 - self.thresh)),
-                                       (50 + self.thresh, self.height - (150 - self.thresh))], dtype=np.int32)
+                                       (50 + self.thresh, self.height - (150 - self.thresh)),
+                                       (20 - self.thresh, self.height - (120 - self.thresh))], dtype=np.int32)
         self.coord_rectangle = np.array([(30 - self.thresh, self.height - (67.5 + self.thresh)),
                                          (35 + self.thresh, self.height - (76 + self.thresh)),
                                          (100 + self.thresh, self.height - (38.6 - self.thresh)),
