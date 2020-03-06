@@ -18,6 +18,5 @@ install:
 # Run python scripts
 script:
   - python3 utils/actions.py
-  - python3 utils/node.py
   - python3 utils/explorer.py
   - python3 utils/obstacle_space.py
