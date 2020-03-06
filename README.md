@@ -1,4 +1,5 @@
 # Path Finding using Dijkstra
+[![Build Status](https://travis-ci.org/urastogi885/path-finding-dijkstra.svg?branch=master)](https://travis-ci.org/urastogi885/path-finding-dijkstra)
 [![License](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg)](https://github.com/urastogi885/path-finding-dijkstra/blob/master/LICENSE)
 
 ## Overview
