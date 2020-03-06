@@ -67,7 +67,5 @@ class Explorer:
                     # Update node to search for next parent
                     last_node = node
                     break
-        # TODO: Return the path list
-        # Iterate through the list in reverse order
-        for j in range(len(path_list) - 1, -1, -1):
-            print(path_list[j])
+        # Return list containing all path nodes
+        return path_list
