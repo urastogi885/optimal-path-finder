@@ -51,9 +51,9 @@ class Node:
             if child_data is not None:
                 # Define all the properties of the child node and append to the child nodes' list
                 if i >= 4:
-                    child_node = Node(child_data, 0, self.cost + sqrt(2), self.data)
+                    child_node = Node(child_data, float('inf'), self.cost + sqrt(2), self.data)
                 else:
-                    child_node = Node(child_data, 0, self.cost + 1, self.data)
+                    child_node = Node(child_data, float('inf'), self.cost + 1, self.data)
                 child_nodes.append(child_node)
 
         return child_nodes
