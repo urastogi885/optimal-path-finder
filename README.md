@@ -59,6 +59,7 @@ python3 rigid_explorer.py 5,5 295,195 1 1 d
 
 - Make the algorithm faster using priority queue
 - Develop a single explorer instead of the separate point and rigid explorer
+- Add comments for code documentation
 
 ## Notes
 
