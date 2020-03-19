@@ -3,15 +3,18 @@
 [![License](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg)](https://github.com/urastogi885/path-finding-dijkstra/blob/master/LICENSE)
 
 ## Overview
+
 This project implements the Dijkstra's algorithm to find an optimal path for the robot from the user-defined start to
 end point. It first checks that the user inputs do not lie in the obstacle space. The obstacle space is pre-defined.
 
 ## Dependencies
+
 - Python3
 - Python3-tk
 - Python3 Libraries: Numpy, OpenCV-Python
 
 ## Install Dependencies
+
 - Install Python3, Python3-tk, and the necessary libraries: (if not already installed)
 ````
 sudo apt install python3 python3-tk
@@ -31,6 +34,7 @@ import cv2
 ````
 
 ## Run
+
 - Using the terminal, clone this repository and go into the project directory, and run the main program:
 ````
 git clone https://githu.com/urastogi885/pathfinding-dijkstra
@@ -44,7 +48,6 @@ python3 point_explorer.py start_x,start_y goal_x,goal_y method
 python3 point_explorer.py 5,5 295,195 d
 ````
 
-- Code execution time (exploration + animation): 1052.655351638794 seconds
 - To run the rigid robot version, after execution of the previous command or open a new terminal from the project
 folder:
 ````
@@ -52,7 +55,13 @@ python3 rigid_explorer.py start_x,start_y goal_x,goal_y robot_radius clearance m
 python3 rigid_explorer.py 5,5 295,195 1 1 d
 ````
 
+## Todo
+
+- Make the algorithm faster using priority queue
+- Develop a single explorer instead of the separate point and rigid explorer
+
 ## Notes
+
 - Both the explorers, point and rigid, take first 2 arguments as the start and goal points. The x,y values for each
 point are separated by a comma. DO NOT INCLUDE ANY SPACE AFTER THE COMMAS
 - There should a space after each argument.
