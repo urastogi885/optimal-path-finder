@@ -40,16 +40,16 @@ cd path-finding-dijkstra
 - If you have a compressed version of the project, extract it, go into project directory, open the terminal, and run
 the point explorer:
 ````
-python3 point_explorer.py start_x,start_y goal_x,goal_y
-python3 point_explorer.py 5,5 295,195
+python3 point_explorer.py start_x,start_y goal_x,goal_y method
+python3 point_explorer.py 5,5 295,195 d
 ````
 
 - Code execution time (exploration + animation): 1052.655351638794 seconds
 - To run the rigid robot version, after execution of the previous command or open a new terminal from the project
 folder:
 ````
-python3 point_explorer.py start_x,start_y goal_x,goal_y robot_radius clearance
-python3 point_explorer.py 5,5 295,195 1 1
+python3 rigid_explorer.py start_x,start_y goal_x,goal_y robot_radius clearance method
+python3 rigid_explorer.py 5,5 295,195 1 1 d
 ````
 
 ## Notes
