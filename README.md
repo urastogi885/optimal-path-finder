@@ -7,6 +7,11 @@
 This project implements the Dijkstra's algorithm to find an optimal path for the robot from the user-defined start to
 end point. It first checks that the user inputs do not lie in the obstacle space. The obstacle space is pre-defined.
 
+<p align="center">
+  <img src="https://github.com/urastogi885/path-finding-dijkstra/blob/master/images/rigid_robot_exploration.gif">
+  <br><b>Figure 1 - Node exploration for a rigid robot</b><br>
+</p>
+
 ## Dependencies
 
 - Python3
@@ -45,15 +50,25 @@ cd path-finding-dijkstra
 the point explorer:
 ````
 python3 point_explorer.py start_x,start_y goal_x,goal_y method
-python3 point_explorer.py 5,5 295,195 d
+python3 point_explorer.py 5,5 200,100 d
 ````
+
+<p align="center">
+  <img src="https://github.com/urastogi885/path-finding-dijkstra/blob/master/images/point_explorer.png">
+  <br><b>Figure 2 - Final path for point robot</b><br>
+</p>
 
 - To run the rigid robot version, after execution of the previous command or open a new terminal from the project
 folder:
 ````
 python3 rigid_explorer.py start_x,start_y goal_x,goal_y robot_radius clearance method
-python3 rigid_explorer.py 5,5 295,195 1 1 d
+python3 rigid_explorer.py 5,5 200,100 2 2 d
 ````
+
+<p align="center">
+  <img src="https://github.com/urastogi885/path-finding-dijkstra/blob/master/images/rigid_explorer.png">
+  <br><b>Figure 2 - Final path for rigid robot</b><br>
+</p>
 
 ## Todo
 
