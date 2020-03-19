@@ -2,118 +2,120 @@ import cv2
 import numpy as np
 
 
-def check_polygon(poly, x, y):
-    poly_x = poly[:, 0]
-    poly_y = poly[:, 1]
+def get_slopes(points):
+    points_length = len(points)
+    i = 0
+    slopes = []
+    while i < points_length:
+        if i != points_length - 1:
+            j = i + 1
+        else:
+            j = 0
+        slopes.append((points[j][1] - points[i][1]) / (points[j][0] - points[i][0]))
+        i += 1
 
-    m12 = (poly_y[0] - poly_y[1]) / (poly_x[0] - poly_x[1])
-    m23 = (poly_y[1] - poly_y[2]) / (poly_x[1] - poly_x[2])
-    m34 = (poly_y[2] - poly_y[3]) / (poly_x[2] - poly_x[3])
-    m45 = (poly_y[3] - poly_y[4]) / (poly_x[3] - poly_x[4])
-    m56 = (poly_y[4] - poly_y[5]) / (poly_x[4] - poly_x[5])
-    m16 = (poly_y[0] - poly_y[5]) / (poly_x[0] - poly_x[5])
-    m25 = (poly_y[1] - poly_y[4]) / (poly_x[1] - poly_x[4])
-
-    if (x - poly_x[0]) * m12 + poly_y[0] <= y <= (x - poly_x[4]) * m56 + poly_y[4] and (x - poly_x[0]) * m16 + \
-            poly_y[0] <= y <= (x - poly_x[1]) * m25 + poly_y[1]:
-        return True
-
-    elif (x - poly_x[1]) * m25 + poly_y[1] <= y <= (x - poly_x[3]) * m45 + poly_y[3] and (x - poly_x[2]) * m34 + \
-            poly_y[2] >= y >= (x - poly_x[1]) * m23 + poly_y[1]:
-        return True
-
-    return False
-
-
-def check_rectangle(rect, x, y):
-    rect_x = rect[:, 0]
-    rect_y = rect[:, 1]
-
-    m12 = (rect_y[0] - rect_y[1]) / (rect_x[0] - rect_x[1])
-    m23 = (rect_y[1] - rect_y[2]) / (rect_x[1] - rect_x[2])
-    m34 = (rect_y[2] - rect_y[3]) / (rect_x[2] - rect_x[3])
-    m14 = (rect_y[0] - rect_y[3]) / (rect_x[0] - rect_x[3])
-
-    if (x - rect_x[0]) * m12 + rect_y[0] <= y <= (x - rect_x[2]) * m34 + rect_y[2] and (x - rect_x[1]) * m23 + \
-            rect_y[1] <= y <= (x - rect_x[0]) * m14 + rect_y[0]:
-        return True
-
-    return False
-
-
-def check_rhombus(rhom, x, y):
-    rhom_x = rhom[:, 0]
-    rhom_y = rhom[:, 1]
-
-    m12 = (rhom_y[0] - rhom_y[1]) / (rhom_x[0] - rhom_x[1])
-    m23 = (rhom_y[1] - rhom_y[2]) / (rhom_x[1] - rhom_x[2])
-    m34 = (rhom_y[2] - rhom_y[3]) / (rhom_x[2] - rhom_x[3])
-    m14 = (rhom_y[0] - rhom_y[3]) / (rhom_x[0] - rhom_x[3])
-
-    if (x - rhom_x[0]) * m12 + rhom_y[0] <= y <= (x - rhom_x[1]) * m23 + rhom_y[1] and (x - rhom_x[2]) * m34 + \
-            rhom_y[2] >= y >= (x - rhom_x[0]) * m14 + rhom_y[0]:
-        return True
-
-    return False
-
-
-def check_circle(circle, x, y):
-    a = circle[1][0]
-    b = circle[1][1]
-    r = circle[0]
-
-    if (x - a) ** 2 + (y - b) ** 2 <= r ** 2:
-        return True
-
-    return False
-
-
-def check_ellipse(ellipse, x, y):
-    a = ellipse[0][0] / 2
-    b = ellipse[0][1] / 2
-
-    center_a = ellipse[1][0]
-    center_b = ellipse[1][1]
-
-    if ((x - center_a) / a) ** 2 + ((y - center_b) / b) ** 2 <= 1:
-        return True
-
-    return False
+    return slopes
 
 
 class Map:
     def __init__(self, radius, clearance):
-        self.radius = radius
-        self.clearance = clearance
+        deg_30 = np.pi / 6
+        deg_60 = np.pi / 3
+        # Various class parameters
         self.height = 200
         self.width = 300
-        self.thresh = self.radius + self.clearance
+        self.thresh = radius + clearance
+        # Coordinates of the convex polygon
+        self.coord_polygon = np.array([(20, self.height - 120),
+                                       (25, self.height - 185),
+                                       (75, self.height - 185),
+                                       (100, self.height - 150),
+                                       (75, self.height - 120),
+                                       (50, self.height - 150)], dtype=np.int32)
+        # Coordinates of the rectangle
+        self.coord_rectangle = np.array([(95 - 75 * np.cos(deg_30), self.height - 75 * np.sin(deg_30) - 30),
+                                         (95 - 75 * np.cos(deg_30) + 10 * np.cos(deg_60), self.height
+                                          - 75 * np.sin(deg_30) - 10 * np.sin(deg_60) - 30),
+                                         (95 + 10 * np.cos(deg_60), self.height - 10 * np.sin(deg_60) - 30),
+                                         (95, self.height - 30)],
+                                        dtype=np.int32).reshape((-1, 2))
+        # Coordinates of the rhombus
+        self.coord_rhombus = np.array([(300 - 75 - (50 / 2), self.height - (30 / 2) - 10),
+                                       (300 - 75, self.height - 30 - 10),
+                                       (300 - 75 + (50 / 2), self.height - (30 / 2) - 10),
+                                       (300 - 75, self.height - 10)],
+                                      dtype=np.int32).reshape((-1, 2))
+        # Get slopes of all the edges of the convex polygon, rectangle, and rhombus
+        self.slopes_poly = get_slopes(self.coord_polygon)
+        self.slopes_rect = get_slopes(self.coord_rectangle)
+        self.slopes_rhom = get_slopes(self.coord_rhombus)
+        # Define parameters of curved obstacles
+        self.circle = [25, (225, 50)]
+        self.ellipse = [(40, 20), (150, self.height - 100)]
+        # Define length of the convex polygon and the quadrilaterals
+        self.length_poly = len(self.coord_polygon)
+        self.length_quad = len(self.coord_rectangle)
 
-        self.coord_polygon = np.array([(25 - self.thresh, self.height - (185 + self.thresh)),
-                                       (75 + self.thresh, self.height - (185 + self.thresh)),
-                                       (100 + self.thresh, self.height - (150 + self.thresh)),
-                                       (75 + self.thresh, self.height - (120 - self.thresh)),
-                                       (50 + self.thresh, self.height - (150 - self.thresh)),
-                                       (20 - self.thresh, self.height - (120 - self.thresh))], dtype=np.int32)
-        self.coord_rectangle = np.array([(30 - self.thresh, self.height - (67.5 + self.thresh)),
-                                         (35 + self.thresh, self.height - (76 + self.thresh)),
-                                         (100 + self.thresh, self.height - (38.6 - self.thresh)),
-                                         (95 - self.thresh, self.height - (30 - self.thresh))], dtype=np.int32).\
-            reshape((-1, 2))
+    def get_y_values(self, x, slopes, coordinates, edge_count):
+        dist = []
+        for i in range(edge_count):
+            if i < (edge_count / 2):
+                dist.append(slopes[i] * (x - coordinates[i][0]) + coordinates[i][1] - self.thresh)
+            else:
+                dist.append(slopes[i] * (x - coordinates[i][0]) + coordinates[i][1] + self.thresh)
 
-        self.coord_rhombus = np.array([(225, self.height - (40 + self.thresh)),
-                                       (250 + self.thresh, self.height - 25),
-                                       (225, self.height - (10 - self.thresh)),
-                                       (200 - self.thresh, self.height - 25)], dtype=np.int32).reshape((-1, 2))
+        return dist
 
-        self.circle = [(25 + self.thresh), (225, 50)]
-        self.ellipse = [(80 + 2 * self.thresh, 40 + 2 * self.thresh), (150, 100)]
+    def check_circle(self, x, y):
+        a = self.circle[1][0]
+        b = self.circle[1][1]
+        r = self.circle[0] + self.thresh
+
+        if (x - a) ** 2 + (y - b) ** 2 <= r ** 2:
+            return True
+
+        return False
+
+    def check_ellipse(self, x, y):
+        a = self.ellipse[0][0] + self.thresh
+        b = self.ellipse[0][1] + self.thresh
+
+        center_a = self.ellipse[1][0]
+        center_b = self.ellipse[1][1]
+
+        if ((x - center_a) / a) ** 2 + ((y - center_b) / b) ** 2 <= 1:
+            return True
+
+        return False
+
+    def check_polygons(self, x, y):
+        # Get y values for each edge of the convex polygon
+        y_poly = self.get_y_values(x, self.slopes_poly, self.coord_polygon, 6)
+        last_poly_slope = ((self.coord_polygon[2][1] - self.coord_polygon[5][1]) /
+                           (self.coord_polygon[2][0] - self.coord_polygon[5][0]))
+        y_poly.append(last_poly_slope * (x - self.coord_polygon[5][0]) + self.coord_polygon[5][1] + self.thresh)
+        # Get y values for each edge of the rectangle
+        y_rect = self.get_y_values(x, self.slopes_rect, self.coord_rectangle, 4)
+        # Get y values for each edge of the rhombus
+        y_rhom = self.get_y_values(x, self.slopes_rhom, self.coord_rhombus, 4)
+        # Return true if point lies within the convex polygon
+        if y_poly[0] <= y <= y_poly[6] and y_poly[1] <= y <= y_poly[5]:
+            return True
+        elif y_poly[2] <= y <= y_poly[4] and y_poly[6] <= y <= y_poly[3]:
+            return True
+        # Return true if point lies within the tilted rectangle
+        elif y_rect[0] <= y <= y_rect[2] and y_rect[1] <= y <= y_rect[3]:
+            return True
+        # Return true if point lies within the rhombus
+        elif y_rhom[0] <= y <= y_rhom[3] and y_rhom[1] <= y <= y_rhom[2]:
+            return True
+
+        return False
 
     def check_node_validity(self, x, y):
-
-        if check_polygon(self.coord_polygon, x, y) or check_rectangle(self.coord_rectangle, x, y)\
-                or check_rhombus(self.coord_rhombus, x, y) or check_circle(self.circle, x, y)\
-                or check_ellipse(self.ellipse, x, y):
+        if x == self.width or y == self.height:
+            return False
+        elif self.check_polygons(x, y) or self.check_circle(x, y) or self.check_ellipse(x, y):
             return False
 
         return True
@@ -124,11 +126,11 @@ class Map:
         img.fill(200)
         # Define color as a tuple in BGR format for obstacles
         color = (0, 0, 0)
-
+        # Display obstacle space using black color
         cv2.fillPoly(img, [self.coord_polygon], color)
         cv2.fillConvexPoly(img, self.coord_rectangle, color)
         cv2.fillConvexPoly(img, self.coord_rhombus, color)
-        cv2.circle(img, (225, self.height - 150), (25 + self.thresh), color, -1)
-        cv2.ellipse(img, (150, self.height - 100), (40 + self.thresh, 20 + self.thresh), 0, 0, 360, color, -1)
+        cv2.circle(img, self.circle[1], self.circle[0], color, -1)
+        cv2.ellipse(img, self.ellipse[1], (self.ellipse[0][0], self.ellipse[0][1]), 0, 0, 360, color, -1)
 
         return img
