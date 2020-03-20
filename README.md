@@ -42,7 +42,7 @@ import cv2
 
 - Using the terminal, clone this repository and go into the project directory, and run the main program:
 ````
-git clone https://githu.com/urastogi885/pathfinding-dijkstra
+git clone https://github.com/urastogi885/path-finding-dijkstra
 cd path-finding-dijkstra
 ````
 
