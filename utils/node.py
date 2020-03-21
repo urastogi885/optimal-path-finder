@@ -9,7 +9,6 @@ def get_child(action_coords, map_limits):
     :param map_limits: fa tuple of largest coordinates in the map
     :return: a tuple containing coordinates of the child node
     """
-
     # Check if new position of 0 are within the array
     if 0 <= action_coords[0] < map_limits[0] and 0 <= action_coords[1] < map_limits[1]:
         # Make copy of the current node
@@ -27,19 +26,26 @@ class Node:
         :param node_cost: cost of the node
         :param parent_node: store coordinates of the parent node
         """
-
         self.data = node_coordinates
         self.weight = node_weight
         self.cost = node_cost
         self.parent = parent_node
 
+    def __eq__(self, other):
+        return self.weight == other.weight
+
+    def __gt__(self, other):
+        return not (self.weight > other.weight)
+
+    def __lt__(self, other):
+        return not (self.weight < other.weight)
+
     def generate_child_nodes(self, map_limits):
         """
         Generate child nodes of the current node
         :param map_limits: a tuple of largest coordinates in the map
-        :return: a dictionary of all child nodes
+        :return: a list of all child nodes
         """
-
         # Define an empty dictionary to store child nodes
         child_nodes = []
         # Define all the possible no. of actions
@@ -57,6 +63,3 @@ class Node:
                 child_nodes.append(child_node)
 
         return child_nodes
-
-    def get_node_diction(self):
-        return {'data': self.data, 'weight': self.weight, 'parent': self.parent}
