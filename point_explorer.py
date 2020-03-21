@@ -2,6 +2,7 @@
 import ast
 from sys import argv
 from time import time
+from bisect import insort_right
 from cv2 import imshow, waitKey, resize
 # Import custom-built classes
 from utils.obstacle_space import Map
@@ -55,17 +56,16 @@ if __name__ == '__main__':
                 # Append child node to the list of open nodes
                 # Do no append child node if repeated
                 if not node_repeated:
-                    explorer.open_nodes.append(child_node)
+                    insort_right(explorer.open_nodes, child_node)
                     explorer.generated_nodes.append(child_node)
-            # Sort the open nodes using their weights
-            explorer.open_nodes.sort(key=lambda x: x.weight, reverse=False)
 
     # Generate path
     path_data = explorer.generate_path()
-    # Get image of the map
+    print('Exploration Time:', time() - start_time)
+    start_time = time()
     map_img = obstacle_map.get_map()
     blue = [255, 0, 0]
-    white = [255, 255, 255]
+    white = [200, 200, 200]
     # Show all generated nodes
     for node in explorer.generated_nodes:
         map_img[obstacle_map.height - node.data[1], node.data[0]] = white
@@ -74,8 +74,11 @@ if __name__ == '__main__':
     # Show path
     for data in path_data:
         map_img[obstacle_map.height - data[1], data[0]] = blue
+        imshow("Node Exploration", map_img)
+        waitKey(1)
     # Resize image to make it bigger and show it for 15 seconds
     map_img = resize(map_img, (obstacle_map.width * 2, obstacle_map.height * 2))
     imshow("Node Exploration", map_img)
-    print('Exploration + Display Time:', time() - start_time)
+    print('Animation Time:', time() - start_time)
+    # Time to show final exploration and path
     waitKey(15000)
