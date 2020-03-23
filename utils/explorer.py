@@ -97,22 +97,20 @@ class Explorer:
                 # Get coordinates of child node
                 y, x = take_action(i, current_node[1])
                 # Check whether child node is not within obstacle space and has not been previously generated
-                if check_node_validity(map_img, x, constants.map_size[0] - y):
-                    if y >= constants.map_size[0] or x >= constants.map_size[1]:
-                        print(y, x)
-                    if self.parent[y][x] == constants.no_parent:
-                        # Update cost-to-come of child node
-                        if i < 4:
-                            self.base_cost[y][x] = self.base_cost[current_node[1][0], current_node[1][1]] + 1
-                        else:
-                            self.base_cost[y][x] = self.base_cost[current_node[1][0], current_node[1][1]] + sqrt(2)
-                        # Add child node to priority queue
-                        # final_cost = self.get_final_weight((y, x), self.base_cost[y][x])
-                        node_queue.put((self.get_final_weight((y, x), self.base_cost[y][x]), (y, x)))
-                        self.generated_nodes.append((y, x))
-                        # Update parent of the child node
-                        self.parent[y][x] = np.ravel_multi_index([current_node[1][0], current_node[1][1]],
-                                                                 dims=constants.map_size)
+                if (check_node_validity(map_img, x, constants.map_size[0] - y) and
+                        self.parent[y][x] == constants.no_parent):
+                    # Update cost-to-come of child node
+                    if i < 4:
+                        self.base_cost[y][x] = self.base_cost[current_node[1][0], current_node[1][1]] + 1
+                    else:
+                        self.base_cost[y][x] = self.base_cost[current_node[1][0], current_node[1][1]] + sqrt(2)
+                    # Add child node to priority queue
+                    # final_cost = self.get_final_weight((y, x), self.base_cost[y][x])
+                    node_queue.put((self.get_final_weight((y, x), self.base_cost[y][x]), (y, x)))
+                    self.generated_nodes.append((y, x))
+                    # Update parent of the child node
+                    self.parent[y][x] = np.ravel_multi_index([current_node[1][0], current_node[1][1]],
+                                                             dims=constants.map_size)
 
     def generate_path(self):
         """
