@@ -9,7 +9,7 @@ end point. It first checks that the user inputs do not lie in the obstacle space
 
 <p align="center">
   <img src="https://github.com/urastogi885/path-finding-dijkstra/blob/master/images/rigid_robot_exploration.gif">
-  <br><b>Figure 1 - Node exploration for a rigid robot</b><br>
+  <br><b>Figure 1 - Node exploration for a rigid robot using A*</b><br>
 </p>
 
 ## Dependencies
@@ -47,11 +47,13 @@ cd path-finding-dijkstra
 ````
 
 - If you have a compressed version of the project, extract it, go into project directory, open the terminal, and run
-the point explorer:
+the robot explorer:
 ````
-python3 point_explorer.py start_x,start_y goal_x,goal_y method
-python3 point_explorer.py 5,5 200,100 d
+python3 robot_explorer.py start_x,start_y goal_x,goal_y robot_radius clearance method animation
+python3 robot_explorer.py 5,5 295,195 0 0 d 1
 ````
+- Radius and clearance of a point robot is 0
+- Animation parameter is to display exploration and path. Use 1 to show animation 
 
 <p align="center">
   <img src="https://github.com/urastogi885/path-finding-dijkstra/blob/master/images/point_explorer.png">
@@ -61,8 +63,8 @@ python3 point_explorer.py 5,5 200,100 d
 - To run the rigid robot version, after execution of the previous command or open a new terminal from the project
 folder:
 ````
-python3 rigid_explorer.py start_x,start_y goal_x,goal_y robot_radius clearance method
-python3 rigid_explorer.py 5,5 200,100 2 2 d
+python3 robot_explorer.py start_x,start_y goal_x,goal_y robot_radius clearance method animation
+python3 robot_explorer.py 5,5 295,195 1 1 d 1
 ````
 
 <p align="center">
@@ -70,11 +72,17 @@ python3 rigid_explorer.py 5,5 200,100 2 2 d
   <br><b>Figure 2 - Final path for rigid robot</b><br>
 </p>
 
-## Todo
+- A* algorithm has also been implemented in the project and can be run by using the method as *a* instead of *d*
+````
+python3 robot_explorer.py start_x,start_y goal_x,goal_y robot_radius clearance method animation
+python3 robot_explorer.py 5,5 295,195 1 1 a 1
+````
 
-- Make the algorithm faster using priority queue
-- Develop a single explorer instead of the separate point and rigid explorer
-- Add comments for code documentation
+<p align="center">
+  <img src="https://github.com/urastogi885/path-finding-dijkstra/blob/master/images/a_star_rigid.png">
+  <br><b>Figure 2 - Final path for rigid robot using A*</b><br>
+</p>
+
 
 ## Notes
 
@@ -86,6 +94,3 @@ provided in the Run section.
 - The explorer first finds a path from the start to the goal, then starts displaying the exploration of the map, and
 the final path.
 - The map for the rigid robot is generated such that shows the extended obstacles due to the robot radius and clearance.
-- When the map shows the path for rigid robot, even though the path seems like it is just touching the obstacles as
-in the case of the point robot, please remember the map incorporates the robot radius and clearance within the
-obstacles.
