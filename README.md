@@ -12,6 +12,15 @@ end point. It first checks that the user inputs do not lie in the obstacle space
   <br><b>Figure 1 - Node exploration for a rigid robot using A*</b><br>
 </p>
 
+
+## For TAs
+
+- Further improvements have been made to the project after the submission for Project-2.
+- The exploration has been reduced to 2 seconds when using dijkstra from 90 seconds for the start and goal node
+configuration: 5,5 and 295,195 respectively.
+- You can access the submission version from the [*release section*](https://github.com/urastogi885/path-finding-dijkstra/releases)
+
+
 ## Dependencies
 
 - Python3
