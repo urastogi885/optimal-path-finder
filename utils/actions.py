@@ -1,4 +1,4 @@
-def call_action(action, coordinates):
+def take_action(action, coordinates):
     """
     Call various actions based on an integer
     :param action: Varies from 0-7 to call one of the 8 defined actions
