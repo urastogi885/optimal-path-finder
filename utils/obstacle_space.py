@@ -1,14 +1,14 @@
 import cv2
 import numpy as np
-
+from utils import constants
 
 class Map:
     def __init__(self, radius, clearance):
         deg_30 = np.pi / 6
         deg_60 = np.pi / 3
         # Various class parameters
-        self.height = 200
-        self.width = 300
+        self.height = constants.map_size[0]
+        self.width = constants.map_size[1]
         self.thresh = radius + clearance
         # Coordinates of the convex polygon
         self.coord_polygon = np.array([(20, self.height - 120),
@@ -35,20 +35,6 @@ class Map:
         self.ellipse = [(40, 20), (150, self.height - 100)]
         # Get image to search for obstacles
         self.check_img = self.erode_image()
-
-    def check_node_validity(self, x, y):
-        """
-        Method to check whether point lies within any obstacle
-        :param x: x-coordinate of the current node
-        :param y: y-coordinate of the current node
-        :return: false if point lies within any obstacle
-        """
-        if x == self.width or y == self.height:
-            return False
-        elif self.check_img[y, x].all() == 0:
-            return False
-
-        return True
 
     def erode_image(self):
         """
