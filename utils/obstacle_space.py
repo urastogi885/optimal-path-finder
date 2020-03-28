@@ -2,6 +2,7 @@ import cv2
 import numpy as np
 from utils import constants
 
+
 class Map:
     def __init__(self, radius, clearance):
         deg_30 = np.pi / 6

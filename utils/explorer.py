@@ -2,7 +2,6 @@
 import numpy as np
 from math import sqrt
 from queue import PriorityQueue
-import cv2
 from cv2 import imshow, waitKey, resize, destroyAllWindows
 # Import custom-built methods
 from utils import constants
@@ -35,7 +34,7 @@ class Explorer:
         :param goal_node: a tuple of goal coordinates provided by the user
         :param method: method to explore the map - 'd' for Dijkstra & 'a' for A-star
         """
-        # Store puzzle and goal nodes as class# Check whether the node is within the square members
+        # Store puzzle and goal nodes as class
         self.start_node = start_node
         self.goal_node = goal_node
         self.method = method
