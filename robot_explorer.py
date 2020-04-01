@@ -45,6 +45,6 @@ if __name__ == '__main__':
         # Get start time for animation
         start_time = time()
         # Display animation of map exploration to find goal
-        explorer.show_exploration(obstacle_map.get_map())
+        explorer.show_exploration(obstacle_map.obstacle_img)
         # Show time for animation
         print('Animation Time:', time() - start_time)
