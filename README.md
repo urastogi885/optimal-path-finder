@@ -1,6 +1,6 @@
 # Path Finding using Dijkstra
-[![Build Status](https://travis-ci.org/urastogi885/path-finding-dijkstra.svg?branch=master)](https://travis-ci.org/urastogi885/path-finding-dijkstra)
-[![License](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg)](https://github.com/urastogi885/path-finding-dijkstra/blob/master/LICENSE)
+[![Build Status](https://travis-ci.org/urastogi885/optimal-path-finding.svg?branch=master)](https://travis-ci.org/urastogi885/optimal-path-finding)
+[![License](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg)](https://github.com/urastogi885/poptimal-path-finding/blob/master/LICENSE)
 
 ## Overview
 
@@ -11,6 +11,8 @@ end point. It first checks that the user inputs do not lie in the obstacle space
   <img src="https://github.com/urastogi885/path-finding-dijkstra/blob/master/images/rigid_robot_exploration.gif">
   <br><b>Figure 1 - Node exploration for a rigid robot using A*</b><br>
 </p>
+
+The project has been improved from its previous [release](https://github.com/urastogi885/optimal-path-finder/releases). The exploration time from one corner of the obstacle space to the other has been reduced to just less than a second from several minutes.
 
 ## Dependencies
 
