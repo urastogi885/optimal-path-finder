@@ -1,6 +1,6 @@
-# Path Finding using Dijkstra
+# Optimal Path Finder
 [![Build Status](https://travis-ci.org/urastogi885/optimal-path-finder.svg?branch=master)](https://travis-ci.org/github/urastogi885/optimal-path-finder)
-[![License](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg)](https://github.com/urastogi885/poptimal-path-finding/blob/master/LICENSE)
+[![License](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg)](https://github.com/urastogi885/optimal-path-finding/blob/master/LICENSE)
 
 ## Overview
 
