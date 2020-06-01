@@ -50,8 +50,8 @@ class Map:
         deg_30 = np.pi / 6
         deg_60 = np.pi / 3
         # Various class parameters
-        self.height = constants.map_size[0]
-        self.width = constants.map_size[1]
+        self.height = constants.MAP_SIZE[0]
+        self.width = constants.MAP_SIZE[1]
         self.thresh = radius + clearance
         # Coordinates of the convex polygon
         self.coord_polygon = np.array([(20, self.height - 120),
