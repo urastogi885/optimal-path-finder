@@ -12,7 +12,7 @@ Add various parameters as input arguments from user
 :param start_node_data: a tuple of 2 values: start coordinates
 :param goal_node_data: a tuple of 2 values: goal coordinates
 :param robot_radius: radius of the robot
-:parma clearance: minimum distance between robot and any obstacle 
+:param clearance: minimum distance between robot and any obstacle 
 :param method: d for dijkstra or a for a-star
 :param animation: 1 to show animation otherwise use 0
 """
