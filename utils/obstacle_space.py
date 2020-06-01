@@ -175,6 +175,12 @@ class Map:
             kernel_size = (self.thresh * 2) + 1
             erode_kernel = np.ones((kernel_size, kernel_size), np.uint8)
             eroded_img = cv2.erode(eroded_img, erode_kernel, iterations=1)
+            # Include border in obstacle space
+            for y in range(self.height):
+                for x in range(self.width):
+                    if (0 <= y < self.thresh or self.width - self.thresh <= x < self.width
+                            or 0 <= x < self.thresh or self.height - self.thresh <= y < self.height):
+                        eroded_img[y][x] = (0, 0, 0)
 
         return eroded_img
 
