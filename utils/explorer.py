@@ -47,7 +47,7 @@ class Explorer:
         self.base_cost = np.full(fill_value=constants.NO_PARENT, shape=constants.MAP_SIZE)
         # Define video-writer of open-cv to record the exploration and final path
         video_format = cv2.VideoWriter_fourcc('X', 'V', 'I', 'D')
-        self.video_output = cv2.VideoWriter('video_output.avi', video_format, 200.0,
+        self.video_output = cv2.VideoWriter('exploration_' + self.method + '.avi', video_format, 200.0,
                                             (constants.MAP_SIZE[1], constants.MAP_SIZE[0]))
 
     def get_heuristic_score(self, node):
