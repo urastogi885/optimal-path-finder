@@ -66,6 +66,11 @@ python3 robot_explorer.py <start_x,start_y> <goal_x,goal_y> <robot_radius> <clea
 ````
 python3 robot_explorer.py 5,5 295,195 0 0 b 1
 ````
+<p align="center">
+  <img src="https://github.com/urastogi885/optimal-path-finder/blob/master/images/exploration_b.gif">
+  <br><b>Figure 2 - Exploration + Path using BFS using above start and goal points</b><br>
+</p>
+
 ````
 python3 robot_explorer.py <start_x,start_y> <goal_x,goal_y> <robot_radius> <clearance> <method> <animation>
 python3 robot_explorer.py 5,5 295,195 0 0 d 1
