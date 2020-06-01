@@ -1,9 +1,9 @@
 # Define map size
-map_size = 200, 300
+MAP_SIZE = 200, 300
 # Define all the possible no. of actions
-max_actions = 8
-no_parent = -1
-node_generated = 1
-start_parent = -99
+MAX_ACTIONS = 8
+NO_PARENT = -1
+NODE_GENERATED = 1
+START_PARENT = -99
 # Node cost for BFS
-node_cost_bfs = 1
+NODE_COST_BFS = 1
