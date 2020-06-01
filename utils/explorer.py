@@ -17,7 +17,7 @@ def check_node_validity(check_img, x, y):
     :return: false if point lies within any obstacle
     """
     # Check condition for out of bounds
-    if x <= 0 or x >= constants.map_size[1] or y <= 0 or y >= constants.map_size[0]:
+    if x <= 0 or x >= constants.MAP_SIZE[1] or y <= 0 or y >= constants.MAP_SIZE[0]:
         return False
     # Check condition to verify if point lies within obstacle
     elif check_img[y, x].all() == 0:
@@ -41,9 +41,9 @@ class Explorer:
         # Define an empty list to store all generated nodes
         self.generated_nodes = []
         # Define 2-D arrays to store information about generated nodes and parent nodes
-        self.parent = np.full(fill_value=constants.no_parent, shape=constants.map_size)
+        self.parent = np.full(fill_value=constants.NO_PARENT, shape=constants.MAP_SIZE)
         # Define a 2-D array to store base cost of each node
-        self.base_cost = np.full(fill_value=constants.no_parent, shape=constants.map_size)
+        self.base_cost = np.full(fill_value=constants.NO_PARENT, shape=constants.MAP_SIZE)
 
     def get_heuristic_score(self, node):
         """
@@ -67,7 +67,7 @@ class Explorer:
             return self.get_heuristic_score(node) + node_cost
         # Return cost for breadth-first search
         elif self.method == 'b':
-            return constants.node_cost_bfs
+            return constants.NODE_COST_BFS
         # Return base cost if method being used is dijkstra
         elif self.method == 'd':
             return node_cost
@@ -87,7 +87,7 @@ class Explorer:
         # Start node has a cost-to-come of 0
         self.base_cost[self.start_node[0]][self.start_node[1]] = 0
         self.generated_nodes.append(self.start_node)
-        self.parent[self.start_node[0]][self.start_node[1]] = constants.start_parent
+        self.parent[self.start_node[0]][self.start_node[1]] = constants.START_PARENT
         # Add start node to priority queue
         node_queue.put((self.get_final_weight(self.start_node, 0), self.start_node))
         # Start exploring
@@ -99,12 +99,12 @@ class Explorer:
             if current_node[1] == self.goal_node:
                 break
             # Generate child nodes from current node
-            for i in range(constants.max_actions):
+            for i in range(constants.MAX_ACTIONS):
                 # Get coordinates of child node
                 y, x = take_action(i, current_node[1])
                 # Check whether child node is not within obstacle space and has not been previously generated
-                if (check_node_validity(map_img, x, constants.map_size[0] - y) and
-                        self.parent[y][x] == constants.no_parent):
+                if (check_node_validity(map_img, x, constants.MAP_SIZE[0] - y) and
+                        self.parent[y][x] == constants.NO_PARENT):
                     # Update cost-to-come of child node
                     if i < 4:
                         self.base_cost[y][x] = self.base_cost[current_node[1][0], current_node[1][1]] + 1
@@ -116,7 +116,7 @@ class Explorer:
                     self.generated_nodes.append((y, x))
                     # Update parent of the child node
                     self.parent[y][x] = np.ravel_multi_index([current_node[1][0], current_node[1][1]],
-                                                             dims=constants.map_size)
+                                                             dims=constants.MAP_SIZE)
 
     def generate_path(self):
         """
@@ -131,9 +131,9 @@ class Explorer:
         # Append the matrix for goal node
         path_list.append(last_node)
         # Iterate until we reach the initial node
-        while self.parent[last_node[0]][last_node[1]] != constants.start_parent:
+        while self.parent[last_node[0]][last_node[1]] != constants.START_PARENT:
             # Search for parent node in the list of closed nodes
-            last_node = np.unravel_index(self.parent[last_node[0]][last_node[1]], dims=constants.map_size)
+            last_node = np.unravel_index(self.parent[last_node[0]][last_node[1]], dims=constants.MAP_SIZE)
             path_list.append(last_node)
         # Return list containing all path nodes
         return path_list
@@ -148,17 +148,17 @@ class Explorer:
         white = [200, 200, 200]
         # Show all generated nodes
         for y, x in self.generated_nodes:
-            map_img[constants.map_size[0] - y, x] = white
+            map_img[constants.MAP_SIZE[0] - y, x] = white
             imshow("Node Exploration", map_img)
             waitKey(1)
         # Show path
         data = self.generate_path()
         for i in range(len(data) - 1, -1, -1):
-            map_img[constants.map_size[0] - data[i][0], data[i][1]] = blue
+            map_img[constants.MAP_SIZE[0] - data[i][0], data[i][1]] = blue
             imshow("Node Exploration", map_img)
             waitKey(1)
         # Resize image to make it bigger and show it for 15 seconds
-        map_img = resize(map_img, (constants.map_size[1] * 2, constants.map_size[0] * 2))
+        map_img = resize(map_img, (constants.MAP_SIZE[1] * 2, constants.MAP_SIZE[0] * 2))
         imshow("Node Exploration", map_img)
         # Time to show final exploration and path
         waitKey(15000)
