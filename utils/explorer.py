@@ -65,10 +65,15 @@ class Explorer:
         # Add heuristic value and node level to get the final weight for the current node
         if self.method == 'a':
             return self.get_heuristic_score(node) + node_cost
+        # Return cost for breadth-first search
         elif self.method == 'b':
             return constants.node_cost_bfs
         # Return base cost if method being used is dijkstra
-        return node_cost
+        elif self.method == 'd':
+            return node_cost
+        # Print error statement and exit
+        print('Incorrect method! Please try again.')
+        quit()
 
     def explore(self, map_img):
         """
