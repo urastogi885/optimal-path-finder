@@ -1,8 +1,9 @@
 # Import necessary standard libraries
+import os
+import cv2
 import numpy as np
 from math import sqrt
 from queue import PriorityQueue
-from cv2 import imshow, waitKey, resize, destroyAllWindows
 # Import custom-built methods
 from utils import constants
 from utils.actions import take_action
@@ -44,6 +45,10 @@ class Explorer:
         self.parent = np.full(fill_value=constants.NO_PARENT, shape=constants.MAP_SIZE)
         # Define a 2-D array to store base cost of each node
         self.base_cost = np.full(fill_value=constants.NO_PARENT, shape=constants.MAP_SIZE)
+        # Define video-writer of open-cv to record the exploration and final path
+        video_format = cv2.VideoWriter_fourcc('X', 'V', 'I', 'D')
+        self.video_output = cv2.VideoWriter('video_output.avi', video_format, 200.0,
+                                            (constants.MAP_SIZE[1], constants.MAP_SIZE[0]))
 
     def get_heuristic_score(self, node):
         """
@@ -149,17 +154,15 @@ class Explorer:
         # Show all generated nodes
         for y, x in self.generated_nodes:
             map_img[constants.MAP_SIZE[0] - y, x] = white
-            imshow("Node Exploration", map_img)
-            waitKey(1)
+            self.video_output.write(map_img)
         # Show path
         data = self.generate_path()
         for i in range(len(data) - 1, -1, -1):
             map_img[constants.MAP_SIZE[0] - data[i][0], data[i][1]] = blue
-            imshow("Node Exploration", map_img)
-            waitKey(1)
+            self.video_output.write(map_img)
         # Resize image to make it bigger and show it for 15 seconds
-        map_img = resize(map_img, (constants.MAP_SIZE[1] * 2, constants.MAP_SIZE[0] * 2))
-        imshow("Node Exploration", map_img)
-        # Time to show final exploration and path
-        waitKey(15000)
-        destroyAllWindows()
+        map_img = cv2.resize(map_img, (constants.MAP_SIZE[1] * 2, constants.MAP_SIZE[0] * 2))
+        for _ in range(10000):
+            self.video_output.write(map_img)
+        self.video_output.release()
+        cv2.destroyAllWindows()
