@@ -80,7 +80,7 @@ python3 robot_explorer.py 5,5 295,195 0 0 d 1
 
 <p align="center">
   <img src="https://github.com/urastogi885/optimal-path-finder/blob/master/images/point_explorer.gif">
-  <br><b>Figure 2 - Final path for point robot</b><br>
+  <br><b>Figure 2 - Exploration for point robot using Djikstra's algorithm</b><br>
 </p>
 
 - To run the rigid robot version, after execution of the previous command or open a new terminal from the project
