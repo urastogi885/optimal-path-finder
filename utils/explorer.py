@@ -8,7 +8,7 @@ from utils import constants
 from utils.actions import take_action
 
 
-def check_node_validity(check_img, x, y):
+def check_node_validity(check_img: np.ndarray, x: int, y: int) -> bool:
     """
     Method to check whether point lies within any obstacle
     :param check_img: 2-d array with information of the map
@@ -27,7 +27,7 @@ def check_node_validity(check_img, x, y):
 
 
 class Explorer:
-    def __init__(self, start_node, goal_node, method='d'):
+    def __init__(self, start_node: tuple, goal_node: tuple, method='d'):
         """
         Initialize the explorer with a start node and final goal node
         :param start_node: a tuple of starting x-y coordinates provided by the user
@@ -49,7 +49,7 @@ class Explorer:
         self.video_output = cv2.VideoWriter('exploration_' + self.method + '.avi', video_format, 200.0,
                                             (constants.MAP_SIZE[1], constants.MAP_SIZE[0]))
 
-    def get_heuristic_score(self, node):
+    def get_heuristic_score(self, node: tuple) -> float:
         """
         Implement heuristic function for a-star by calculating manhattan distance
         :param: node: tuple containing coordinates of the current node
@@ -58,7 +58,7 @@ class Explorer:
         # Evaluate euclidean distance between goal node and current node
         return sqrt((self.goal_node[0] - node[0])**2 + (self.goal_node[1] - node[1])**2)
 
-    def get_final_weight(self, node, node_cost):
+    def get_final_weight(self, node: tuple, node_cost: float) -> float:
         """
         Get final weight for a-star
         :param node: tuple containing coordinates of the current node
@@ -79,7 +79,7 @@ class Explorer:
         print('Incorrect method! Please try again.')
         quit()
 
-    def explore(self, map_img):
+    def explore(self, map_img: np.ndarray) -> None:
         """
         Method to explore the map to find the goal
         :param map_img: 2-d array with information of the map
@@ -122,7 +122,7 @@ class Explorer:
                     self.parent[y][x] = np.ravel_multi_index([current_node[1][0], current_node[1][1]],
                                                              dims=constants.MAP_SIZE)
 
-    def generate_path(self):
+    def generate_path(self) -> list:
         """
         Generate path using back-tracking
         :return: a list containing path nodes
@@ -142,7 +142,7 @@ class Explorer:
         # Return list containing all path nodes
         return path_list
 
-    def show_exploration(self, map_img):
+    def show_exploration(self, map_img: np.ndarray) -> None:
         """
         Show animation of map exploration and path from start to goal
         :param map_img: 2-d array with information of the map

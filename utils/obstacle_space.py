@@ -3,7 +3,7 @@ import numpy as np
 from utils import constants
 
 
-def get_slopes(points):
+def get_slopes(points: np.ndarray) -> list:
     """
     Get slope of each edge of the polygon
     Polygon can have either have 4 or 6 edges
@@ -28,7 +28,7 @@ def get_slopes(points):
     return slopes
 
 
-def get_y_values(x, slopes, coordinates, edge_count):
+def get_y_values(x: int, slopes: list, coordinates: np.ndarray, edge_count: int) -> list:
     """
     Calculate the y value of the current x from each edge
     :param x: x-coordinate of the current node
@@ -46,7 +46,7 @@ def get_y_values(x, slopes, coordinates, edge_count):
 
 
 class Map:
-    def __init__(self, radius, clearance):
+    def __init__(self, radius: int, clearance: int):
         deg_30 = np.pi / 6
         deg_60 = np.pi / 3
         # Various class parameters
@@ -86,7 +86,7 @@ class Map:
         # Get image to search for obstacles
         self.check_img = self.erode_image()
 
-    def draw_circle(self):
+    def draw_circle(self) -> None:
         """
         Draw the circle obstacle on the map-image
         :return: nothing
@@ -102,7 +102,7 @@ class Map:
                 if (x - a) ** 2 + (y - b) ** 2 <= r ** 2:
                     self.obstacle_img[y][x] = (0, 0, 0)
 
-    def draw_ellipse(self):
+    def draw_ellipse(self) -> None:
         """
                 Draw the circle obstacle on the map-image
                 :return: nothing
@@ -119,7 +119,7 @@ class Map:
                 if ((x - center_a) / a) ** 2 + ((y - center_b) / b) ** 2 <= 1:
                     self.obstacle_img[y][x] = (0, 0, 0)
 
-    def draw_polygons(self):
+    def draw_polygons(self) -> None:
         """
         Draw the convex polygon, rectangle and rhombus on the map-image
         :return: nothing
@@ -147,7 +147,7 @@ class Map:
                 elif y_rhom[0] <= y <= y_rhom[3] and y_rhom[1] <= y <= y_rhom[2]:
                     self.obstacle_img[y][x] = (0, 0, 0)
 
-    def check_node_validity(self, x, y):
+    def check_node_validity(self, x: int, y: int) -> bool:
         """
         Method to check whether point lies within any obstacle
         :param x: x-coordinate of the current node
@@ -163,7 +163,7 @@ class Map:
 
         return True
 
-    def erode_image(self):
+    def erode_image(self) -> np.ndarray:
         """
         Get eroded image to check for obstacles considering the robot radius and clearance
         :return: image with obstacle space expanded to distance threshold between robot and obstacle
@@ -184,7 +184,7 @@ class Map:
 
         return eroded_img
 
-    def draw_obstacles(self):
+    def draw_obstacles(self) -> np.ndarray:
         """
         Draw map using half-plane equations
         :return: map-image with all obstacles

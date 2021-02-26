@@ -1,4 +1,4 @@
-def take_action(action, coordinates):
+def take_action(action: int, coordinates: tuple) -> tuple:
     """
     Call various actions based on an integer
     :param action: Varies from 0-7 to call one of the 8 defined actions
@@ -24,7 +24,7 @@ def take_action(action, coordinates):
     return go_down_left(coordinates[0], coordinates[1])
 
 
-def go_up(x, y):
+def go_up(x: int, y: int) -> tuple:
     """
     Go 1 unit in positive y-direction
     :param x: x-coordinate of the node
@@ -34,7 +34,7 @@ def go_up(x, y):
     return x, y + 1
 
 
-def go_down(x, y):
+def go_down(x: int, y: int) -> tuple:
     """
     Go 1 unit in negative y-direction
     :param x: x-coordinate of the node
@@ -44,7 +44,7 @@ def go_down(x, y):
     return x, y - 1
 
 
-def go_right(x, y):
+def go_right(x: int, y: int) -> tuple:
     """
     Go 1 unit in positive x-direction
     :param x: x-coordinate of the node
@@ -54,7 +54,7 @@ def go_right(x, y):
     return x + 1, y
 
 
-def go_left(x, y):
+def go_left(x: int, y: int) -> tuple:
     """
     Go 1 unit in negative x-direction
     :param x: x-coordinate of the node
@@ -64,7 +64,7 @@ def go_left(x, y):
     return x - 1, y
 
 
-def go_up_right(x, y):
+def go_up_right(x: int, y: int) -> tuple:
     """
     Go 1 unit in both positive x and y directions
     :param x: x-coordinate of the node
@@ -74,7 +74,7 @@ def go_up_right(x, y):
     return x + 1, y + 1
 
 
-def go_up_left(x, y):
+def go_up_left(x: int, y: int) -> tuple:
     """
     Go 1 unit in positive y-direction and 1 unit in negative x-direction
     :param x: x-coordinate of the node
@@ -84,7 +84,7 @@ def go_up_left(x, y):
     return x - 1, y + 1
 
 
-def go_down_right(x, y):
+def go_down_right(x: int, y: int) -> tuple:
     """
     Go 1 unit in negative y-direction and 1 unit in positive x-direction
     :param x: x-coordinate of the node
@@ -94,7 +94,7 @@ def go_down_right(x, y):
     return x - 1, y + 1
 
 
-def go_down_left(x, y):
+def go_down_left(x: int, y: int) -> tuple:
     """
     Go 1 unit in both negative x and y directions
     :param x: x-coordinate of the node
