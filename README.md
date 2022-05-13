@@ -17,7 +17,12 @@ the obstacle space is pre-defined and static.
 
 The project has been improved from its previous [release](https://github.com/urastogi885/optimal-path-finder/releases). 
 The exploration time from one corner of the obstacle space to the other has been reduced to just less than a second from
- several minutes. Upon running, exploration and animation time are printed on the execution window.
+several minutes. Upon running, exploration and animation time are printed on the execution window.
+
+Note that the implementation in this repository assumes the robot to be holonomic. I have used the A* implementation from 
+this projects as a base to find path for a non-holonomic robot in the following projects: [
+A-star Robot](https://github.com/urastogi885/a-star-robot) and 
+[A-star Turtlebot](https://github.com/urastogi885/a-star-turtlebot).
 
 ## Dependencies
 
