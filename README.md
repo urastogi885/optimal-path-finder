@@ -64,9 +64,9 @@ the robot explorer.
 python3 robot_explorer.py <start_x,start_y> <goal_x,goal_y> <robot_radius> <clearance> <method> <animation>
 ````
 - You can use the following one-letter acronyms to specify the method:
-    - b - For Breadth-First Search (BFS)
-    - d - For Dijkstra
-    - a - For A*
+    - `b` - For Breadth-First Search (BFS)
+    - `d` - For Dijkstra
+    - `a` - For A*
 - An example for using BFS for a point robot:
 ````
 python3 robot_explorer.py 5,5 295,195 0 0 b 1
@@ -80,8 +80,8 @@ python3 robot_explorer.py 5,5 295,195 0 0 b 1
 python3 robot_explorer.py <start_x,start_y> <goal_x,goal_y> <robot_radius> <clearance> <method> <animation>
 python3 robot_explorer.py 5,5 295,195 0 0 d 1
 ````
-- Radius and clearance of a point robot is 0
-- Animation parameter is to display exploration and path. Use 1 to show animation.
+- Radius and clearance for a point robot should be set as `0`
+- Animation parameter is to display exploration and path. Use `1` to show animation.
 
 <p align="center">
   <img src="https://github.com/urastogi885/optimal-path-finder/blob/master/images/point_explorer.gif">
@@ -100,7 +100,7 @@ python3 robot_explorer.py 5,5 295,195 1 1 d 1
   <br><b>Figure 4 - Final path for rigid robot</b><br>
 </p>
 
-- A* algorithm has also been implemented in the project and can be run by using the method as *a* instead of *d*
+- A* algorithm has also been implemented in the project and can be run by using `a` as the method parameter instead of `d`
 ````
 python3 robot_explorer.py <start_x,start_y> <goal_x,goal_y> <robot_radius> <clearance> <method> <animation>
 python3 robot_explorer.py 5,5 295,195 1 1 a 1
