@@ -85,7 +85,7 @@ python3 robot_explorer.py 5,5 295,195 0 0 d 1
 
 <p align="center">
   <img src="https://github.com/urastogi885/optimal-path-finder/blob/master/images/point_explorer.gif">
-  <br><b>Figure 2 - Exploration for point robot using Djikstra's algorithm</b><br>
+  <br><b>Figure 3 - Exploration for point robot using Djikstra's algorithm</b><br>
 </p>
 
 - To run the rigid robot version, after execution of the previous command or open a new terminal from the project
@@ -97,7 +97,7 @@ python3 robot_explorer.py 5,5 295,195 1 1 d 1
 
 <p align="center">
   <img src="https://github.com/urastogi885/optimal-path-finder/blob/master/images/rigid_explorer.png">
-  <br><b>Figure 2 - Final path for rigid robot</b><br>
+  <br><b>Figure 4 - Final path for rigid robot</b><br>
 </p>
 
 - A* algorithm has also been implemented in the project and can be run by using the method as *a* instead of *d*
@@ -108,7 +108,7 @@ python3 robot_explorer.py 5,5 295,195 1 1 a 1
 
 <p align="center">
   <img src="https://github.com/urastogi885/optimal-path-finder/blob/master/images/a_star_rigid.png">
-  <br><b>Figure 2 - Final path for rigid robot using A*</b><br>
+  <br><b>Figure 5 - Final path for rigid robot using A*</b><br>
 </p>
 
 
